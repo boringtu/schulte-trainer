@@ -6,4 +6,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   base: './',
   plugins: [react(), tailwindcss()],
+  server: {
+    // 监听所有 IPv4 地址，方便同一局域网内的手机和平板访问
+    host: '0.0.0.0',
+  },
 });

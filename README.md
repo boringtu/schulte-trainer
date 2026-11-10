@@ -49,4 +49,6 @@ npm run lint
 npm run build
 ```
 
+运行 `npm run dev` 后，本机访问终端显示的 Local 地址。同一局域网内的手机或 iPad 可以打开终端显示的 Network 地址。
+
 项目使用 Vite、React、TypeScript、Tailwind CSS、Jest 和 Day.js。生产构建输出到 `dist/`，可部署到静态站点。

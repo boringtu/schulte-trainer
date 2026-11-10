@@ -49,4 +49,6 @@ npm run lint
 npm run build
 ```
 
+After running `npm run dev`, open the Local URL on your computer. On a phone or iPad connected to the same network, open the Network URL shown in the terminal.
+
 The stack is Vite, React, TypeScript, Tailwind CSS, Jest, and Day.js. Deploy the production output in `dist/` to any static host.
