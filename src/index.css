@@ -217,6 +217,34 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   user-select: none;
   transition: opacity 130ms;
 }
+/* 圆环转动时，数字绕各自的中心反向转动以保持直立 */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .board-ring {
+    transform-origin: 300px 300px;
+    animation-name: ring-turn;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+  }
+  .ring-number {
+    animation-name: ring-turn;
+    animation-duration: inherit;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    animation-play-state: inherit;
+  }
+  /* 格子包裹数字，沿用圆环的动画时长和播放状态 */
+  .board-ring > .board-cell { animation-duration: inherit; animation-play-state: inherit; }
+  .board-ring[data-reverse="true"] { animation-direction: reverse; }
+  .board-ring[data-reverse="true"] .ring-number { animation-direction: normal; }
+  .board-svg[data-rotating="true"] .board-ring { animation-play-state: running; }
+}
+@keyframes ring-turn {
+  from { transform: rotate(0turn); }
+  to { transform: rotate(1turn); }
+}
+
 @media screen and (hover: hover) {
   .board-cell:hover:not([data-marked="true"]) .cell-shape { stroke: #30674d; stroke-width: 3; }
 }

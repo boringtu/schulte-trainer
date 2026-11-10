@@ -7,11 +7,13 @@ import { Icon } from './Icon';
 type Props = {
   text: Copy; // 当前语言文案
   language: Language; // 当前界面语言
+  rotateRings: boolean; // 是否开启同心环转动
   markSelected: boolean; // 是否标记本轮已正确选中的数字
   settings: BoardSettings; // 用户选中的棋盘参数
   open: boolean; // 侧栏是否展开
   panelRef: Ref<HTMLElement>; // 用于识别侧栏外点击
   onClose: () => void; // 收起设置
+  onRotateRingsChange: (enabled: boolean) => void; // 切换圆环转动
   onMarkSelectedChange: (enabled: boolean) => void; // 即时切换标记
   onChange: (settings: BoardSettings) => void; // 应用棋盘参数
   onLanguage: (language: Language) => void; // 切换语言
@@ -23,7 +25,7 @@ type Props = {
 /** 渲染悬浮训练设置和快捷操作 */
 export function Settings({
   text, language, settings, markSelected, open, panelRef, onClose, onChange, onMarkSelectedChange,
-  onLanguage, onShuffle, onPrint, onScores,
+  rotateRings, onRotateRingsChange, onLanguage, onShuffle, onPrint, onScores,
 }: Props) {
   return (
     <aside id="training-settings" ref={panelRef} className="settings-panel screen-only"
@@ -63,6 +65,13 @@ export function Settings({
         </fieldset>
 
         <div className="toggles">
+          {settings.type === 'rings' && (
+            <label className="setting-row">
+              <span>{text.rotateRings}</span>
+              <input type="checkbox" role="switch" checked={rotateRings}
+                onChange={(event) => onRotateRingsChange(event.target.checked)} />
+            </label>
+          )}
           <label className="setting-row">
             <span>{text.colorful}</span>
             <input type="checkbox" role="switch" checked={settings.colorful}

@@ -5,7 +5,7 @@ export type Score = {
   id: string; // 单次完成记录的唯一键
   player: string | null; // 访客记为 null
   date: number; // 完成时的本地时间戳
-  type: BoardType; // 完成轮次使用的图形
+  type: BoardType | 'irregular' | 'circle' | 'circleHex'; // 兼容旧版棋盘的成绩
   level: Level; // 完成轮次使用的等阶
   durationMs: number; // 完成训练的毫秒耗时
 };

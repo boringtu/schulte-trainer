@@ -14,6 +14,7 @@ const zh = {
   colorful: '随机数字颜色',
   tinted: '随机浅色底色',
   markSelected: '标记已选数字', // 仅标记按正确顺序选中的数字
+  rotateRings: '旋转圆环',
   language: '界面语言',
   regenerate: '重新随机生成',
   print: '打印',
@@ -39,11 +40,17 @@ const zh = {
   duration: '耗时',
   shapes: {
     square: '经典方格',
-    irregular: '不规则方格',
+    irregular1: '不规则方格 1',
+    irregular2: '不规则方格 2',
     hex: '蜂巢',
-    circle: '圆形',
-    circleHex: '圆形 + 蜂巢',
-    circleIrregular: '圆形 + 不规则',
+    rings: '圆环',
+    circleIrregular: '圆形不规则',
+  },
+  // 旧棋盘名称仅供已有的成绩记录使用
+  legacyShapes: {
+    irregular: '不规则方格（旧版）',
+    circle: '圆形（旧版）',
+    circleHex: '圆形 + 蜂巢（旧版）',
   },
 };
 
@@ -60,6 +67,7 @@ const en: typeof zh = {
   colorful: 'Random number colors',
   tinted: 'Random pastel backgrounds',
   markSelected: 'Mark selected numbers',
+  rotateRings: 'Rotate rings',
   language: 'Language',
   regenerate: 'Shuffle board',
   print: 'Print',
@@ -85,11 +93,16 @@ const en: typeof zh = {
   duration: 'Duration',
   shapes: {
     square: 'Classic grid',
-    irregular: 'Irregular grid',
+    irregular1: 'Irregular grid 1',
+    irregular2: 'Irregular grid 2',
     hex: 'Honeycomb',
-    circle: 'Circle',
-    circleHex: 'Circle + honeycomb',
-    circleIrregular: 'Circle + irregular',
+    rings: 'Rings',
+    circleIrregular: 'Irregular circle',
+  },
+  legacyShapes: {
+    irregular: 'Irregular grid (legacy)',
+    circle: 'Circle (legacy)',
+    circleHex: 'Circle + honeycomb (legacy)',
   },
 };
 

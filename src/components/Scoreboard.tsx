@@ -13,6 +13,7 @@ type Props = {
 
 /** 用原生对话框展示本地训练成绩 */
 export function Scoreboard({ text, dialogRef, scores }: Props) {
+  const shapes = { ...text.legacyShapes, ...text.shapes }; // 旧成绩保留实际训练过的棋盘名称
   return (
     <dialog ref={dialogRef} className="score-dialog screen-only" aria-labelledby="scores-title"
       onClick={(event) => {
@@ -45,7 +46,7 @@ export function Scoreboard({ text, dialogRef, scores }: Props) {
                   <tr key={score.id}>
                     <td>{score.player ?? text.guest}</td>
                     <td>{dayjs(score.date).format('YYYY-MM-DD HH:mm:ss')}</td>
-                    <td>{text.shapes[score.type]} · {text.levelName(score.level)}</td>
+                    <td>{shapes[score.type]} · {text.levelName(score.level)}</td>
                     <td className="score-time">{formatTimer(score.durationMs)}.{Math.floor(score.durationMs % 1000 / 100)}</td>
                   </tr>
                 ))}

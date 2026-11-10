@@ -22,18 +22,43 @@ describe('训练棋盘', () => {
     }
   });
 
-  test.each(levels)('圆形棋盘在 %s 阶时圆格不重叠', (level) => {
-    const { cells } = createBoard({ type: 'circle', level, colorful: false, tinted: false });
-    // 读取圆形路径的首段半径以检查任意两个点击区域的间距
-    const radius = Number(cells[0].path.split(' a ')[1].split(',')[0]);
-    for (const [index, cell] of cells.entries()) {
-      for (const other of cells.slice(index + 1)) {
-        expect(Math.hypot(cell.x - other.x, cell.y - other.y)).toBeGreaterThan(2 * radius);
-      }
+  test.each(levels)('圆环在 %s 阶时有静止中心和完整的扇区', (level) => {
+    const board = createBoard({ type: 'rings', level, colorful: false, tinted: false }, () => 0.35);
+    // 环内单元包含两段同心圆弧，中心独立于所有转动组
+    expect(board.cells.filter((cell) => cell.ring === undefined)).toHaveLength(1);
+    expect(new Set(board.ringDurations).size).toBe(board.ringDurations.length);
+    for (const ring of board.ringDurations.keys()) {
+      const sectors = board.cells.filter((cell) => cell.ring === ring);
+      expect(sectors.length).toBeGreaterThanOrEqual(3);
+      expect(sectors.every((cell) => cell.path.split(' A ').length === 3)).toBe(true);
     }
   });
 
-  test.each(['irregular', 'circleIrregular'] as const)('%s 的字号随格子大小变化', (type) => {
+  test.each(levels)('不规则方格 1 在 %s 阶时每条内部边由两个四边形共用', (level) => {
+    const board = createBoard({ type: 'irregular1', level, colorful: false, tinted: false });
+    const edges = new Map<string, number>(); // 记录相同几何边被使用的次数
+    for (const cell of board.cells) {
+      const points = cell.path.slice(2, -2).split(' L ');
+      expect(points).toHaveLength(4);
+      for (const [index, point] of points.entries()) {
+        const edge = [point, points[(index + 1) % points.length]].sort().join('|');
+        edges.set(edge, (edges.get(edge) ?? 0) + 1);
+      }
+    }
+    expect([...edges.values()].filter((count) => count === 1)).toHaveLength(4 * level);
+    expect([...edges.values()].filter((count) => count === 2)).toHaveLength(2 * level * (level - 1));
+  });
+
+  test('不规则方格 2 包含不同边数的多边形', () => {
+    let seed = 42; // 固定种子，让测试使用可复现的非均匀点位
+    const board = createBoard({ type: 'irregular2', level: 7, colorful: false, tinted: false }, () => {
+      seed = (1664525 * seed + 1013904223) >>> 0;
+      return seed / 2 ** 32;
+    });
+    expect(new Set(board.cells.map((cell) => cell.path.split(' L ').length)).size).toBeGreaterThan(2);
+  });
+
+  test.each(['irregular1', 'irregular2', 'circleIrregular'] as const)('%s 的字号随格子大小变化', (type) => {
     // 固定随机源以便比较不规则单元的字体尺寸
     const board = createBoard({ type, level: 5, colorful: false, tinted: false }, () => 0.35);
     expect(new Set(board.cells.map((cell) => Math.round(cell.font))).size).toBeGreaterThan(1);

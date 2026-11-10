@@ -26,11 +26,12 @@ export default function App() {
   const [scores, setScores] = useStoredState<Score[]>('scores', []);
   // 分开保存当前设置和实际可见的棋盘，淡出期间保留旧题
   const [settings, setSettings] = useState(defaultSettings);
-  const [display, setDisplay] = useState(() => ({ board: createBoard(defaultSettings), settings: defaultSettings }));
+  const [display, setDisplay] = useState(() => ({ board: createBoard(defaultSettings), settings: defaultSettings, version: 0 }));
   // 保存当前轮次的进度、计时与交互反馈
   const [round, setRound] = useState(createRound);
   const [elapsed, setElapsed] = useState(0);
   const [markSelected, setMarkSelected] = useState(false); // 默认保留已选格子的原始外观
+  const [rotateRings, setRotateRings] = useState(false); // 圆环默认静止
   const [wrong, setWrong] = useState<number | null>(null);
   const [fading, setFading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -100,7 +101,9 @@ export default function App() {
     if (nextSettings === null) return;
     pendingSettings.current = null;
     window.clearTimeout(boardTimer.current);
-    setDisplay({ board: createBoard(nextSettings), settings: nextSettings });
+    const board = createBoard(nextSettings);
+    // 新棋盘使用新的动画时间轴，避免继承上一局的角度
+    setDisplay((previous) => ({ board, settings: nextSettings, version: previous.version + 1 }));
     setRound(createRound());
     setElapsed(0);
     setWrong(null);
@@ -184,6 +187,7 @@ export default function App() {
           sidebarButton.current?.focus();
         }}
         markSelected={markSelected} onMarkSelectedChange={setMarkSelected}
+        rotateRings={rotateRings} onRotateRingsChange={setRotateRings}
         onChange={regenerate} onLanguage={setLanguage} onShuffle={() => regenerate(settings)}
         onPrint={() => window.print()} onScores={() => scoreDialog.current?.showModal()} />
 
@@ -220,8 +224,8 @@ export default function App() {
               onTransitionEnd={(event) => {
                 if (fading && event.target === event.currentTarget && event.propertyName === 'opacity') replaceBoard();
               }}>
-              <BoardView board={display.board} label={shape} next={round.next} wrong={wrong} locked={fading}
-                markSelected={markSelected} onNumber={pickNumber} />
+              <BoardView key={display.version} board={display.board} label={shape} next={round.next} wrong={wrong} locked={fading}
+                markSelected={markSelected} rotating={rotateRings && !finished && !fading} onNumber={pickNumber} />
             </div>
             {finished && !fading && (
               <div className="round-celebration" aria-hidden="true">
