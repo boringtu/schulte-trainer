@@ -30,6 +30,7 @@ export default function App() {
   // 保存当前轮次的进度、计时与交互反馈
   const [round, setRound] = useState(createRound);
   const [elapsed, setElapsed] = useState(0);
+  const [markSelected, setMarkSelected] = useState(false); // 默认保留已选格子的原始外观
   const [wrong, setWrong] = useState<number | null>(null);
   const [fading, setFading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -182,6 +183,7 @@ export default function App() {
           setSidebarOpen(false);
           sidebarButton.current?.focus();
         }}
+        markSelected={markSelected} onMarkSelectedChange={setMarkSelected}
         onChange={regenerate} onLanguage={setLanguage} onShuffle={() => regenerate(settings)}
         onPrint={() => window.print()} onScores={() => scoreDialog.current?.showModal()} />
 
@@ -218,7 +220,8 @@ export default function App() {
               onTransitionEnd={(event) => {
                 if (fading && event.target === event.currentTarget && event.propertyName === 'opacity') replaceBoard();
               }}>
-              <BoardView board={display.board} label={shape} next={round.next} wrong={wrong} locked={fading} onNumber={pickNumber} />
+              <BoardView board={display.board} label={shape} next={round.next} wrong={wrong} locked={fading}
+                markSelected={markSelected} onNumber={pickNumber} />
             </div>
           </div>
 

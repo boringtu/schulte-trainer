@@ -200,7 +200,6 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .board-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .board-outline { fill: #f4f8f3; stroke: #94aa9b; stroke-width: 1.7; }
 .board-cell { cursor: pointer; outline: none; }
-.board-cell[aria-disabled="true"] { cursor: default; }
 .cell-shape {
   fill: #fff;
   stroke: #8ca498;
@@ -218,12 +217,13 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   transition: opacity 130ms;
 }
 @media screen and (hover: hover) {
-  .board-cell:hover:not([aria-disabled="true"]) .cell-shape { stroke: #30674d; stroke-width: 3; }
+  .board-cell:hover:not([data-marked="true"]) .cell-shape { stroke: #30674d; stroke-width: 3; }
 }
 @media screen {
   .board-cell:focus-visible .cell-shape { stroke: #28664b; stroke-width: 4; }
-  .board-cell[data-done="true"] .cell-shape { fill: #e4eee4 !important; }
-  .board-cell[data-done="true"] .cell-number { opacity: .22; }
+  .board-cell[data-marked="true"] { cursor: default; }
+  .board-cell[data-marked="true"] .cell-shape { fill: #e4eee4 !important; }
+  .board-cell[data-marked="true"] .cell-number { opacity: .22; }
   .board-cell[data-wrong="true"] .cell-shape { fill: #fce7e4 !important; stroke: #af574d; stroke-width: 3; }
 }
 

@@ -7,10 +7,12 @@ import { Icon } from './Icon';
 type Props = {
   text: Copy; // 当前语言文案
   language: Language; // 当前界面语言
+  markSelected: boolean; // 是否标记本轮已正确选中的数字
   settings: BoardSettings; // 用户选中的棋盘参数
   open: boolean; // 侧栏是否展开
   panelRef: Ref<HTMLElement>; // 用于识别侧栏外点击
   onClose: () => void; // 收起设置
+  onMarkSelectedChange: (enabled: boolean) => void; // 即时切换标记
   onChange: (settings: BoardSettings) => void; // 应用棋盘参数
   onLanguage: (language: Language) => void; // 切换语言
   onShuffle: () => void; // 重新生成当前棋盘
@@ -20,7 +22,8 @@ type Props = {
 
 /** 渲染悬浮训练设置和快捷操作 */
 export function Settings({
-  text, language, settings, open, panelRef, onClose, onChange, onLanguage, onShuffle, onPrint, onScores,
+  text, language, settings, markSelected, open, panelRef, onClose, onChange, onMarkSelectedChange,
+  onLanguage, onShuffle, onPrint, onScores,
 }: Props) {
   return (
     <aside id="training-settings" ref={panelRef} className="settings-panel screen-only"
@@ -69,6 +72,11 @@ export function Settings({
             <span>{text.tinted}</span>
             <input type="checkbox" role="switch" checked={settings.tinted}
               onChange={(event) => onChange({ ...settings, tinted: event.target.checked })} />
+          </label>
+          <label className="setting-row">
+            <span>{text.markSelected}</span>
+            <input type="checkbox" role="switch" checked={markSelected}
+              onChange={(event) => onMarkSelectedChange(event.target.checked)} />
           </label>
           <label className="setting-row">
             <span className="flex items-center gap-2"><Icon name="globe" />{text.language}</span>

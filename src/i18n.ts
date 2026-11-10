@@ -13,6 +13,7 @@ const zh = {
   cells: (count: number) => `${count} 个数字`,
   colorful: '随机数字颜色',
   tinted: '随机浅色底色',
+  markSelected: '标记已选数字', // 仅标记按正确顺序选中的数字
   language: '界面语言',
   regenerate: '重新随机生成',
   print: '打印',
@@ -58,6 +59,7 @@ const en: typeof zh = {
   cells: (count) => `${count} numbers`,
   colorful: 'Random number colors',
   tinted: 'Random pastel backgrounds',
+  markSelected: 'Mark selected numbers',
   language: 'Language',
   regenerate: 'Shuffle board',
   print: 'Print',
