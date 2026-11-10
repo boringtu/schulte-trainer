@@ -223,6 +223,11 @@ export default function App() {
               <BoardView board={display.board} label={shape} next={round.next} wrong={wrong} locked={fading}
                 markSelected={markSelected} onNumber={pickNumber} />
             </div>
+            {finished && !fading && (
+              <div className="round-celebration" aria-hidden="true">
+                <span className="celebration-badge"><Icon name="check" />{text.complete}</span>
+              </div>
+            )}
           </div>
 
           <div className="training-foot screen-only">

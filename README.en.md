@@ -14,7 +14,7 @@ A browser-based Schulte number trainer. Practice with a timer or print the curre
 
 1. Open training settings in the upper left and pick a layout, level, and colors. Turn on “Mark selected numbers” to fade cells selected in order.
 2. Select a player in the top bar, or enter a name and press Enter to add one. Rounds without a selected player are saved under Guest.
-3. Select the numbers in ascending order. The timer starts at 1 and the result is saved when you select the final number.
+3. Select the numbers in ascending order. The timer starts at 1. Selecting the final number plays a completion effect and saves the result.
 4. Open the scoreboard from settings to see the player, date, layout, level, and elapsed time.
 5. Choose Print and select A4 portrait in the browser dialog. The browser print shortcut works too. The worksheet retains the current arrangement and restores completed numbers.
 

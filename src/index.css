@@ -182,6 +182,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 }
 
 .board-stage {
+  position: relative;
   display: grid;
   place-items: center;
   padding: 12px clamp(7px, 3vw, 24px);
@@ -225,6 +226,61 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .board-cell[data-marked="true"] .cell-shape { fill: #e4eee4 !important; }
   .board-cell[data-marked="true"] .cell-number { opacity: .22; }
   .board-cell[data-wrong="true"] .cell-shape { fill: #fce7e4 !important; stroke: #af574d; stroke-width: 3; }
+}
+
+/* 完成提示叠在棋盘上，播放完毕后让出视线 */
+.round-celebration {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #f2f8dede 0%, #f8fbf180 40%, transparent 72%);
+  animation: celebration-appear 1300ms ease both;
+}
+.celebration-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 19px;
+  border: 1px solid #b7d3a7;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 5px 20px #244c3c33;
+  color: #fff;
+  font-size: clamp(16px, 4vw, 21px);
+  font-weight: 750;
+  animation: celebration-pop 420ms cubic-bezier(.2, .8, .2, 1) both;
+}
+.celebration-badge svg { width: 1.15em; height: 1.15em; color: var(--lime); }
+.celebration-badge::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 2px solid #76a65c;
+  border-radius: inherit;
+  animation: celebration-ripple 800ms ease-out 140ms both;
+}
+
+@keyframes celebration-appear {
+  0%, 100% { opacity: 0; }
+  14%, 74% { opacity: 1; }
+  100% { visibility: hidden; }
+}
+@keyframes celebration-pop {
+  0% { transform: scale(.82); }
+  55% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+@keyframes celebration-ripple {
+  0% { opacity: .7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+@keyframes celebration-still {
+  0%, 99% { visibility: visible; }
+  100% { visibility: hidden; }
 }
 
 .training-foot { padding: 12px clamp(10px, 3vw, 22px) 13px; border-top: 1px solid var(--line); }
@@ -387,6 +443,9 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; }
+  .round-celebration { animation-name: celebration-still; }
+  .celebration-badge { animation: none; }
+  .celebration-badge::after { display: none; }
 }
 
 /* 打印保留当前棋盘，恢复所有数字并移除页面控件 */
@@ -396,6 +455,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   :root, body { background: #fff; color: #171717; min-width: 0; min-height: 0; }
   .app-shell { min-height: 0; }
   .screen-only { display: none !important; }
+  .round-celebration { visibility: hidden !important; }
   .score-dialog::backdrop { display: none; }
   .print-only { display: block; }
   .workspace { width: 100%; margin: 0; padding: 0; }
