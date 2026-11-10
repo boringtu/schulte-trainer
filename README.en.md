@@ -12,7 +12,7 @@ A browser-based Schulte number trainer. Practice with a timer or print the curre
 
 ## How to use
 
-1. Open training settings in the upper left and pick a layout, level, and colors. Turn on “Mark selected numbers” to fade cells selected in order.
+1. Open training settings in the upper left and pick a layout, level, and colors. Turn on “Mark selected numbers” to fade cells selected in order. The sidebar closes after about one second on page load. Move the pointer over it to cancel that automatic close.
 2. Select a player in the top bar, or enter a name and press Enter to add one. Rounds without a selected player are saved under Guest.
 3. Select the numbers in ascending order. The timer starts at 1. Selecting the final number plays a completion effect and saves the result.
 4. Open the scoreboard from settings to see the player, date, layout, level, and elapsed time.

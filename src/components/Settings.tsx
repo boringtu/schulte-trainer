@@ -12,6 +12,7 @@ type Props = {
   settings: BoardSettings; // 用户选中的棋盘参数
   open: boolean; // 侧栏是否展开
   panelRef: Ref<HTMLElement>; // 用于识别侧栏外点击
+  onMouseEnter: () => void; // 鼠标移入时取消首次自动收起
   onClose: () => void; // 收起设置
   onRotateRingsChange: (enabled: boolean) => void; // 切换圆环转动
   onMarkSelectedChange: (enabled: boolean) => void; // 即时切换标记
@@ -24,12 +25,12 @@ type Props = {
 
 /** 渲染悬浮训练设置和快捷操作 */
 export function Settings({
-  text, language, settings, markSelected, open, panelRef, onClose, onChange, onMarkSelectedChange,
+  text, language, settings, markSelected, open, panelRef, onMouseEnter, onClose, onChange, onMarkSelectedChange,
   rotateRings, onRotateRingsChange, onLanguage, onShuffle, onPrint, onScores,
 }: Props) {
   return (
     <aside id="training-settings" ref={panelRef} className="settings-panel screen-only"
-      data-open={open} inert={!open} aria-labelledby="settings-title">
+      data-open={open} inert={!open} aria-labelledby="settings-title" onMouseEnter={onMouseEnter}>
       <div className="settings-head flex items-center justify-between">
         <h2 id="settings-title">{text.settings}</h2>
         <button type="button" className="icon-button" onClick={onClose} aria-label={text.close}>

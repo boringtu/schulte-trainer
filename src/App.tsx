@@ -182,6 +182,7 @@ export default function App() {
       </header>
 
       <Settings text={text} language={language} settings={settings} open={sidebarOpen} panelRef={sidebar}
+        onMouseEnter={() => window.clearTimeout(introTimer.current)}
         onClose={() => {
           setSidebarOpen(false);
           sidebarButton.current?.focus();
