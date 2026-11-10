@@ -202,7 +202,8 @@ const layouts: Record<BoardType, Layout> = {
   hex: (level) => honeycomb(level, false),
   circle: (level) => {
     const { points, step } = rings(level);
-    const r = step * 0.44;
+    // 给每环最接近的两个圆格留出间隙
+    const r = step * 0.355;
     return points.map((point) => ({ ...point, font: r * 0.94, path: circlePath(point, r) }));
   },
   circleHex: (level) => honeycomb(level, true),

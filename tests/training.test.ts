@@ -22,6 +22,17 @@ describe('训练棋盘', () => {
     }
   });
 
+  test.each(levels)('圆形棋盘在 %s 阶时圆格不重叠', (level) => {
+    const { cells } = createBoard({ type: 'circle', level, colorful: false, tinted: false });
+    // 读取圆形路径的首段半径以检查任意两个点击区域的间距
+    const radius = Number(cells[0].path.split(' a ')[1].split(',')[0]);
+    for (const [index, cell] of cells.entries()) {
+      for (const other of cells.slice(index + 1)) {
+        expect(Math.hypot(cell.x - other.x, cell.y - other.y)).toBeGreaterThan(2 * radius);
+      }
+    }
+  });
+
   test.each(['irregular', 'circleIrregular'] as const)('%s 的字号随格子大小变化', (type) => {
     // 固定随机源以便比较不规则单元的字体尺寸
     const board = createBoard({ type, level: 5, colorful: false, tinted: false }, () => 0.35);
