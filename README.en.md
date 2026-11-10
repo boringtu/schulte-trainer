@@ -4,6 +4,12 @@
 
 A browser-based Schulte number trainer. Practice with a timer or print the current board as a single A4 worksheet.
 
+## Screenshots
+
+| Classic level 5 grid | Training settings and circular irregular board |
+| --- | --- |
+| ![Classic level 5 grid and round timer](docs/screenshots/classic-grid.png) | ![Open training settings next to a circular irregular board with pastel backgrounds](docs/screenshots/training-settings.png) |
+
 ## How to use
 
 1. Open training settings in the upper left and pick a layout, level, and colors.
