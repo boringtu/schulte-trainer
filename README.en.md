@@ -10,6 +10,14 @@ A browser-based Schulte number trainer. Practice with a timer or print the curre
 | --- | --- |
 | ![Classic level 5 grid during a timed round, with the next number shown above](docs/screenshots/classic-grid.png) | ![Open training settings next to a level 7 irregular circle with pastel backgrounds](docs/screenshots/training-settings.png) |
 
+### Phones and iPad
+
+In phone portrait mode, the board uses as much of the available width as possible. On short landscape screens, the timer and progress move to the left of the board. The board scales up on iPad when space allows. Tap the numbers directly and scroll the settings panel to reach more options.
+
+| Phone portrait · Classic level 5 grid | iPad portrait · Level 7 rings |
+| --- | --- |
+| ![Timed classic level 5 round on a phone in portrait mode](docs/screenshots/mobile-phone.png) | ![Level 7 rings with pastel cells on an iPad in portrait mode](docs/screenshots/mobile-ipad.png) |
+
 ## How to use
 
 1. Open training settings in the upper left and pick a layout, level, and colors. Turn on “Mark selected numbers” to fade cells selected in order. The sidebar closes after about one second on page load. Move the pointer over it to cancel that automatic close.
